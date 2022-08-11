@@ -5,28 +5,28 @@ fetch("http://localhost:3000/api/products")
     }
   })
   .then(function (products) {
-
-    // Ajout de la liste des informations "products" dans la fonction "displayProducts" pour les récupérer ensuite
-    displayProducts(products);
-
+    if (products) {
+      // Ajout de la liste des informations "products" dans la fonction "displayProducts" pour les récupérer ensuite
+      displayProducts(products);
+    }
   })
   .catch(error => {
     // console.dir(error)
     if (error.message === "Failed to fetch"){
       error = error.message;
-      ErrorMessage(error);
+      document.querySelector("h2").innerHTML = "Killian";
     }
   });
 ;
 
-function ErrorMessage(error) {
-  console.log(error);
-  if (error === 404) {
-    alert('ERREUR : Le liens n existe pas')
-  }
-  if (error === "Failed to fetch") {
-    alert('ERREUR : API non démarer')
-  }
+// function ErrorMessage(error) {
+//   console.log(error);
+//   if (error === 404) {
+//     alert('ERREUR : Le liens n existe pas')
+//   }
+//   if (error === "Failed to fetch") {
+//     alert('ERREUR : API non démarer')
+//   }
   
   // let ErreurH1 = "Erreur"
   // document.querySelector('.titles h1').innerHTML = ErreurH1;
@@ -34,7 +34,7 @@ function ErrorMessage(error) {
   // let messageError = "API non démarer"
 
   // document.querySelector('.titles h2').innerHTML = messageError;  
-};
+// };
 
 function displayProducts(products) {
   // Création d'une boucle pour afficher tout les éléments avec leurs informations tant qu'il en a encore avec la meme structure vennent de la liste "products" qui sera nommer ici en "element"

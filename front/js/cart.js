@@ -94,7 +94,7 @@ function cart() {
         CartItemQuantity.setAttribute("max", "100");
         CartItemQuantity.setAttribute("value", element.quantity);
 
-        CartItemQuantity.addEventListener('input', modifier);
+        CartItemQuantity.addEventListener('change', modifier);
 
         CartItemSettingsQuantity.appendChild(CartItemQuantity);
 
@@ -191,9 +191,12 @@ function modifier(event) {
   const articleColor = article.dataset.color;
   const update = panier.find(panier => articleId == panier.id && articleColor == panier.color);
 
-  if (articleQuantity === 0){
-    alert("Vous ne pouvez pas commander 0 canapé !")
-    supprimer(event);
+  if (articleQuantity == 0){
+    alert("La quantité doit etre suppérieur a 0 canapé !")
+    event.target.value = 1;
+    localStorage.setItem("panier", JSON.stringify(update));
+    total();
+    return
   }
 
   update.quantity = articleQuantity;
