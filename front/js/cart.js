@@ -119,28 +119,29 @@ function cart() {
         // console.dir(error)
         if (error.message === "Failed to fetch"){
           error = error.message;
-          ErrorMessage(error);
+          document.querySelector("h1").innerHTML = "ERREUR";
+          document.querySelector("p").innerHTML = "API non démarrer" + error;    
         }
       });
   })
   total();
 }
 
-function ErrorMessage(error) {
-  console.log(error);
-  if (error === 404) {
-    alert('ERREUR : Le liens n existe pas')
-  }
-  if (error === "Failed to fetch") {
-    alert('ERREUR : API non démarer')
-  }
+// function ErrorMessage(error) {
+//   console.log(error);
+//   if (error === 404) {
+//     alert('ERREUR : Le liens n existe pas')
+//   }
+//   if (error === "Failed to fetch") {
+//     alert('ERREUR : API non démarer')
+//   }
 
-  // let ErreurH1 = "Erreur"
-  // document.querySelector('.cartAndFormContainer h1').innerHTML = ErreurH1;
+//   // let ErreurH1 = "Erreur"
+//   // document.querySelector('.cartAndFormContainer h1').innerHTML = ErreurH1;
 
-  // let messageError = "API non démarer"
-  // document.querySelector('.cart__price p').innerHTML = messageError;
-};
+//   // let messageError = "API non démarer"
+//   // document.querySelector('.cart__price p').innerHTML = messageError;
+// };
 
 function total() {
   let quantites = 0;

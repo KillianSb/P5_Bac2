@@ -11,36 +11,35 @@ fetch("http://localhost:3000/api/products/"+id)
       console.dir(res);
       return res.json();
     }
-    if (res.status === 404) {
-      error = res.status;
-      ErrorMessage(error);
-    }
+    // if (res.status === 404) {
+    //   error = res.status;
+    //   ErrorMessage(error);
+    // }
   })
   .then(function (element) {
-
     // Ajout de la liste des informations "element" dans la fonction "displayElement" pour les récupérer ensuite
     displayElement(element);
     // console.log(element);
-
   })
   .catch(error => {
     // console.dir(error)
     if (error.message === "Failed to fetch"){
       error = error.message;
-      ErrorMessage(error);
+      document.querySelector("h1").innerHTML = "ERREUR";
+      document.querySelector("p").innerHTML = "API non démarrer" + error;
     }
   });
 ;
 
-function ErrorMessage(error) {
-  console.log(error);
-  if (error === 404) {
-    alert('ERREUR : Le liens n existe pas')
-  }
-  if (error === "Failed to fetch") {
-    alert('ERREUR : API non démarer')
-  }
-};
+// function ErrorMessage(error) {
+//   console.log(error);
+//   if (error === 404) {
+//     alert('ERREUR : Le liens n existe pas')
+//   }
+//   if (error === "Failed to fetch") {
+//     alert('ERREUR : API non démarer')
+//   }
+// };
 
 function displayElement(element) {
 
