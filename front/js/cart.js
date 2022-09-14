@@ -1,13 +1,21 @@
 
 //appel du panier situé dans le local storage, pour pouvoir l'exploiter
-const panier = JSON.parse(localStorage.getItem("panier"));
-if (panier) {
-  cart();
-};
+let panier = JSON.parse(localStorage.getItem("panier"));
+console.log(panier)
 
-function cart() {
+if (panier) {
+  console.log(panier)
+
+  cart(panier);
+
+}else {
+  document.querySelector('.cart').innerHTML = "Le panier est vide !"
+}
+;
+
+function cart(panier) {
   let cartItems = document.getElementById("cart__items")
-  panier.forEach(element => {
+  panier?.forEach(element => {
     fetch("http://localhost:3000/api/products/"+element.id)
       .then(function (res) {
         if (res.ok) {
@@ -60,7 +68,7 @@ function cart() {
         productColor.textContent = element.color;
 
         let productPrice = document.createElement("p");
-        productPrice.textContent = product.price + "€";
+        productPrice.textContent = new Intl.NumberFormat('fr-FR',{style: 'currency',currency : 'EUR'}).format(product.price);
         // console.log(product.price);
 
         productDescription.appendChild(productTitre);
@@ -119,9 +127,9 @@ function cart() {
         // console.dir(error)
         if (error.message === "Failed to fetch"){
           error = error.message;
-          document.querySelector("h1").innerHTML = "ERREUR";
-          document.querySelector("p").innerHTML = "API non démarrer" + error;    
-        }
+          document.querySelector("h1").innerHTML = "Une erreur est survenue";
+          document.querySelector("h2").innerHTML = "Pas de panier trouvés";
+          }
       });
   })
   total();
@@ -206,7 +214,7 @@ function modifier(event) {
   total();
 }
 
-document.getElementById('order').addEventListener('click', commander);
+document.getElementById('order')?.addEventListener('click', commander);
 
 const nameRegex = /^[A-zÀ-ú' -]+$/;
 

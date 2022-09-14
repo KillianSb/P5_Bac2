@@ -14,8 +14,8 @@ fetch("http://localhost:3000/api/products")
     // console.dir(error)
     if (error.message === "Failed to fetch"){
       error = error.message;
-      document.querySelector("h1").innerHTML = "ERREUR";
-      document.querySelector("h2").innerHTML = "API non démarrer" + error;
+      document.querySelector("h1").innerHTML = "Une erreur est survenue";
+      document.querySelector("h2").innerHTML = "Pas de produits trouvés";
     }
   });
 ;

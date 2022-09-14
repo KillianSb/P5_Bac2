@@ -25,8 +25,8 @@ fetch("http://localhost:3000/api/products/"+id)
     // console.dir(error)
     if (error.message === "Failed to fetch"){
       error = error.message;
-      document.querySelector("h1").innerHTML = "ERREUR";
-      document.querySelector("p").innerHTML = "API non démarrer" + error;
+      document.querySelector("h1").innerHTML = "Une erreur est survenue";
+      document.querySelector("h2").innerHTML = "ce produit n'existe pas";
     }
   });
 ;
@@ -71,9 +71,9 @@ function displayElement(element) {
 }
 
 function addToCart(product) {
-  const panier = JSON.parse(localStorage.getItem("panier")) || []
-  if (localStorage.cart) {
-      panier = JSON.parse(localStorage.cart);
+  const panier = []
+  if (localStorage.panier) {
+      panier = JSON.parse(localStorage.panier);
   }
   //Si le panier du localStorage n'est pas vide
   if (panier.length) {
