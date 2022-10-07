@@ -155,29 +155,34 @@ function total() {
   let quantites = 0;
   let price = 0;
   const panier = JSON.parse(localStorage.getItem("panier"));
-  panier.forEach(element => {
-    fetch("http://localhost:3000/api/products/"+ element.id)
-      .then(function (res) {
-        if (res.ok) {
-          return res.json();
-        }
-      })
-      .then(function (product) {
-        quantites = element.quantity + quantites;
-        price = (product.price * element.quantity) + price;
-        // console.log(product.price * element.quantity);
-
-        // span pour la quantité
-        const quantiteTotale = document.getElementById("totalQuantity");
-        quantiteTotale.textContent = quantites;
-
-        // span pour le prix
-        const prixTotale = document.getElementById("totalPrice");
-        prixTotale.textContent = price;
-
-      })
-      .catch(error => console.error(error));
-  })
+  if (panier){
+    panier?.forEach(element => {
+      fetch("http://localhost:3000/api/products/"+ element.id)
+        .then(function (res) {
+          if (res.ok) {
+            return res.json();
+          }
+        })
+        .then(function (product) {
+          quantites = element.quantity + quantites;
+          price = (product.price * element.quantity) + price;
+          // console.log(product.price * element.quantity);
+  
+          // span pour la quantité
+          const quantiteTotale = document.getElementById("totalQuantity");
+          quantiteTotale.textContent = quantites;
+  
+          // span pour le prix
+          const prixTotale = document.getElementById("totalPrice");
+          prixTotale.textContent = price;
+  
+        })
+        .catch(error => console.error(error));
+    })
+  
+  }else {
+    document.querySelector('.cart').innerHTML = "Le panier est vide !"
+  }
 }
 
 function supprimer(event) {
@@ -188,7 +193,18 @@ function supprimer(event) {
   const update = panier.filter(panier => articleId != panier.id || articleColor != panier.color)
 
   article.remove();
+
   localStorage.setItem("panier", JSON.stringify(update));
+
+  console.log(JSON.parse(localStorage.getItem("panier").length));
+  console.log(JSON.parse(localStorage.getItem("panier")));
+  console.log((localStorage.getItem("panier").length));
+  console.log((localStorage.getItem("panier")));
+
+  if ((localStorage.getItem("panier").length < 3)){
+    localStorage.removeItem("panier");
+  }
+
   total();
 }
 
@@ -201,10 +217,7 @@ function modifier(event) {
   const update = panier.find(panier => articleId == panier.id && articleColor == panier.color);
 
   if (articleQuantity == 0){
-    alert("La quantité doit etre suppérieur a 0 canapé !")
-    event.target.value = 1;
-    localStorage.setItem("panier", JSON.stringify(update));
-    total();
+    supprimer(event);
     return
   }
 
